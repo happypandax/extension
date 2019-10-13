@@ -1,17 +1,26 @@
 {
-  "name": "dowloader-extension",
+  "name": "hpx-extension",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.12",
+    "@types/react": "^16.9.5",
+    "@types/react-dom": "^16.9.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "release": "^6.1.0",
+    "typescript": "^3.6.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "publish-major": "react-scripts build && release major",
+    "publish-minor": "react-scripts build && release minor",
+    "publish-patch": "react-scripts build && release patch"
   },
   "eslintConfig": {
     "extends": "react-app"
