@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
-import hpxsvg from './happypandax.svg'
+import hpxsvg from '../misc/happypandax.svg'
 import ConnectForm from './ConnectForm';
-import { AppContext, ConnectOpts } from './context';
-import { HPX_SERVER, DEFAULT_HPX_OPTS } from './constants'
-import { callFunction } from './utility/request';
+import { AppContext, ConnectOpts } from '../context';
+import { HPX_SERVER, DEFAULT_HPX_OPTS } from '../constants'
+import { callFunction } from '../utility/request';
 import DownloadInput, { DownloadCurrentUrlButton } from './DownloadInput';
 import './App.css';
 
@@ -13,7 +13,7 @@ const CheckExists = () => {
   const [loading, set_loading] = useState(false)
 
   return (
-      <div className={`ui button ${loading ? "loading" : ""} ${exists === true ? "green" : exists === false ? "red" : "teal"}`} onClick={ev => {
+      <div className={`ui basic button ${loading ? "loading" : ""} ${exists === true ? "green" : exists === false ? "red" : "teal"}`} onClick={ev => {
           ev.preventDefault()
           let current_url = window.location.href
           set_loading(true)
@@ -60,7 +60,7 @@ function App() {
       onConnect,
       connected
     }}>
-      <div className="ui segment">
+      <div className="ui segment browser-popup">
         <div className="text-center">
           <img src={hpxsvg} className={`hpx-logo ${connected ? 'small' : ''}`} alt="logo" />
         </div>

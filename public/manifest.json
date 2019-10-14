@@ -7,6 +7,27 @@
     "192": "logo192.png",
     "512": "logo512.png"
   },
+  "background": {
+    "page": "index.html"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage"
+  ],
+  "commands": {
+    "download-this-gallery": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+D"
+      },
+      "description": "Download this gallery"
+    },
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+S"
+      }
+    }
+  },
   "browser_action": {
     "default_icon": "logo192.png",
     "default_title": "HappyPanda X Extension",

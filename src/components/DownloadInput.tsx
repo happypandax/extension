@@ -1,10 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { callFunction } from './utility/request';
+import { callFunction } from '../utility/request';
+
+// browser.commands.onCommand.addListener(function (command) {
+//     if (command === "download-this-gallery") {
+//       console.log("Downloading this gallery");
+//     }
+//   });
+  
 
 export const DownloadButton = ({ added = false, loading = false, children = undefined, ...props}) => {
 
     return (
-        <button {...props} className={`ui button ${!children ? "icon" : ""} ${added ? "green" : "primary"} ${loading ? "loading" : ""}`}>
+        <button {...props} className={`ui basic button ${!children ? "icon" : ""} ${added ? "green" : "primary"} ${loading ? "loading" : ""}`}>
             <i className={`icon ${added ? "check" : "download"}`}></i>
             {children}
         </button>

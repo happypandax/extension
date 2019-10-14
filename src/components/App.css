@@ -2,6 +2,7 @@
     width: 8em;
     height: 8em;
     margin: auto;
+    transition:all 0.5s ease
 }
 
 .hpx-logo.small {
@@ -11,4 +12,10 @@
 
 .text-center {
     text-align: center;
+}
+
+.browser-popup {
+    width: 355pt;
+    max-height: 350pt;
+    transition:all 0.5s ease
 }

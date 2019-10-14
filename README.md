@@ -32,7 +32,6 @@ All contributions are welcome!
     TSC_COMPILE_ON_ERROR=true
     INLINE_RUNTIME_CHUNK=false
     ```
-- Run `yarn start` to start the application
 - To load the extension:
 - Run `yarn run build`
 - Go to `about:debugging` (FireFox)

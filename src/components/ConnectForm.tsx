@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
-import { HPX_SERVER, HPX_SERVER_ENDPOINT_PATH } from './constants'
-import { fetch } from './utility/request';
-import { ErrorMessage } from './misc';
-import { AppContext } from './context';
+import { HPX_SERVER, HPX_SERVER_ENDPOINT_PATH } from '../constants'
+import { fetch } from '../utility/request';
+import { ErrorMessage } from './Misc';
+import { AppContext } from '../context';
 
 const ConnectForm = () => {
     
@@ -81,7 +81,7 @@ const ConnectForm = () => {
             </div>
             {!!error && <ErrorMessage>{error}</ErrorMessage>}
             <p>
-                <button type="submit" className={`ui button ${loading ? " loading" : ""}`}>Connect</button>
+                <button type="submit" className={`ui basic button ${loading ? " loading" : ""}`}>Connect</button>
             </p>
         </form>
     );
