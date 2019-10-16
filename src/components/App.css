@@ -36,7 +36,7 @@
     color: rgba(0, 0, 0, 0.2);
 }
 
-.ui.placeholder.segment.not-available {
+.ui.placeholder.segment.not-available, #buttons {
     min-height: 10em;
 }
 

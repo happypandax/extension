@@ -142,8 +142,13 @@ const Buttons = () => {
 
   return (
     <>
-    {available && <DownloadCurrentUrlButton/>}
-    {available && <CheckExists/>}
+    {available &&
+    <div id="buttons" className="ui basic segment secondary fluid">
+      <div className="two ui buttons">
+        <DownloadCurrentUrlButton/>
+        <CheckExists/>
+      </div>
+    </div>}
     {!available && <NotAvailable/>}
     </>
   )
@@ -364,14 +369,16 @@ const App = () => {
   const [ready, set_ready] = useState(IS_POPUP_CONTEXT ? false : true)
 
   useEffect(() => {
-    if (!connected && ready) {
-      setBadge({text:"Off", color:"black", background: "red"})
-    } else if (ready) {
-      getBagde({text: true}).then(b => {
-        if (b.text === 'Off') {
-          setBadge({text:"", color:"", background: ""})
-        }
-      })
+    if (browser) {
+      if (!connected && ready) {
+        setBadge({text:"Off", color:"black", background: "red"})
+      } else if (ready) {
+        getBagde({text: true}).then(b => {
+          if (b.text === 'Off') {
+            setBadge({text:"", color:"", background: ""})
+          }
+        })
+      }
     }
   }, [connected, ready])
   
@@ -406,6 +413,10 @@ const App = () => {
                   }
                 }
                 set_header_text("This site is supported!")
+              }
+
+              if ( ["S", "E"].includes((await getBagde()).text)) { // reset badge
+                setBadge({text: "", color: ""})
               }
 
             }
