@@ -1,12 +1,17 @@
 export const askSitePermission = async (site: string | string[]) => {
-    if (browser) {
-        let s
-        if (typeof site === 'string') {
-            s = [site]
+    try {
+        if (browser) {
+            let s
+            if (typeof site === 'string') {
+                s = [site]
+            }
+            return await browser.permissions.request({origins: s})
         }
-        return await browser.permissions.request({origins: s})
+        return false
+    } catch(err) {
+        console.error(err)
+        throw err
     }
-    return false
 }
 
 export const hasSitePermission = async (site: string) => {

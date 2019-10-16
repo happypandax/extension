@@ -164,8 +164,7 @@ const PermissionsSegment = ({show = false, onGrant = undefined, children = undef
         <span>
           {children}
           <span className="ml-2">
-          <button className="ui button mini" ref={r => ( r.addEventListener('click', ev => {
-            ev.preventDefault();
+          <button className="ui button mini" onClick={ ev => {
             if (onGrant) {
               try {
                 onGrant(true)
@@ -173,9 +172,8 @@ const PermissionsSegment = ({show = false, onGrant = undefined, children = undef
                 appcontext.setError(err.message)
               }
             }
-          }))}>Grant</button>
+          }}>Grant</button>
           <button className="ui button mini" onClick={ev => {
-            ev.preventDefault();
             if (onGrant) {
               try {
                 onGrant(false)
@@ -208,7 +206,7 @@ const AskTabsPermission = () => {
         })
       }
     }}>
-      This extension requires permission to access your tabs to be able to access your tab's URL
+      This extension requires permission to access your tabs to be able to read your tab's URL
     </PermissionsSegment>
   )
 }
@@ -437,8 +435,10 @@ const App = () => {
               await loadContentScripts()
 
               browser.runtime.onUpdateAvailable.addListener(() => { reload() })
-              for (let m of Object.keys(sites)) {
-                browser.webNavigation.onDOMContentLoaded.addListener(r => onSiteNav(sites[m], r), {url: [{urlMatches: sites[m].test}]})
+              if (await hasWebNavPermission()) {
+                for (let m of Object.keys(sites)) {
+                  browser.webNavigation.onDOMContentLoaded.addListener(r => onSiteNav(sites[m], r), {url: [{urlMatches: sites[m].test}]})
+                }
               }
 
               browser.menus.create({
@@ -514,14 +514,15 @@ const App = () => {
               <img src={hpxsvg} className={`hpx-logo ${connected ? 'small' : ''}`} alt="logo" />
             </div>
             {error && <ErrorMessage>{error}</ErrorMessage>}
-            {connected && IS_POPUP_CONTEXT && <AskTabsPermission/>}
+            // CAN'T GET THIS TO WORK!!
+            {/* {connected && IS_POPUP_CONTEXT && <AskTabsPermission/>}
             {connected && IS_POPUP_CONTEXT && <AskWebNavPermission/>}
             {connected && IS_POPUP_CONTEXT && <AskAllSitesPermission/>}
-            {connected && IS_POPUP_CONTEXT && <AskSitePermission/>}
+            {connected && IS_POPUP_CONTEXT && <AskSitePermission/>} */}
             {!connected && <ConnectForm/>}
             {connected && <div>
               <Buttons/>
-              <div className="ui horizontal divider">Or</div>
+              <div className="ui horizontal divider">Or download URL</div>
               <DownloadInput/>
             </div>}
           </div>

@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "HappyPanda X Extension",
+  "name": "HappyPanda X",
   "version": "1.0.0",
   "description": "A WebExtensions add-on that talks with HappyPanda X from browsers",
   "applications": {
@@ -23,9 +23,6 @@
     "<all_urls>"
   ],
   "permissions": [
-    "tabs",
-    "webNavigation",
-    "<all_urls>",
     "activeTab",
     "storage",
     "menus"
