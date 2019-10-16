@@ -3,15 +3,27 @@
   "name": "HappyPanda X Extension",
   "version": "1.0.0",
   "description": "A WebExtensions add-on that talks with HappyPanda X from browsers",
+  "applications": {
+    "gecko": {
+      "id": "happypandax@twiddly"
+    }
+  },
   "icons": {
     "192": "logo192.png",
     "512": "logo512.png"
   },
   "background": {
-    "page": "index.html"
+    "page": "index.html#background"
   },
+  "optional_permissions": [
+    "tabs",
+    "webNavigation",
+    "<all_urls>"
+  ],
   "permissions": [
     "tabs",
+    "webNavigation",
+    "<all_urls>",
     "activeTab",
     "storage"
   ],
@@ -31,6 +43,6 @@
   "browser_action": {
     "default_icon": "logo192.png",
     "default_title": "HappyPanda X Extension",
-    "default_popup": "index.html"
+    "default_popup": "index.html#popup"
   }
 }

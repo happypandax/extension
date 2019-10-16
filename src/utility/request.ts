@@ -1,5 +1,5 @@
 import { native_fetch } from '.'
-import { HPX_CLIENT_NAME, DEFAULT_HPX_OPTS } from '../constants'
+import { HPX_CLIENT_NAME, BACKGROUND_STATE } from '../constants'
 
 export const getJson = (msg) => {
     return JSON.parse(msg)
@@ -34,13 +34,13 @@ export const fetch = (url, props: FetchInit = {}) => {
     return native_fetch(url, fetch_props)
 }
 
-export const callFunction = (name: string, args: object, opts = DEFAULT_HPX_OPTS) => {
+export const callFunction = (name: string, args: object, {session = undefined as string, server = undefined as string} = {}) => {
     let prepared_data = {
-        session: opts.session,
+        session: session || BACKGROUND_STATE.session,
         name: HPX_CLIENT_NAME,
         data: [{fname: name, ...args}]
     }
-    return fetch(opts.server, {method:"post", json: true, body: prepared_data}).then(async (r) => {
+    return fetch(server || BACKGROUND_STATE.server, {method:"post", json: true, body: prepared_data}).then(async (r) => {
         let d
         if (r.ok) {
             let r_data = await r.json()

@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { callFunction } from '../utility/request';
+import { getActiveTabUrl } from '../browser_utils';
+import sites from '../sites';
 
 // browser.commands.onCommand.addListener(function (command) {
 //     if (command === "download-this-gallery") {
@@ -7,6 +9,20 @@ import { callFunction } from '../utility/request';
 //     }
 //   });
   
+export const getGalleryUrl = async () => {
+    let u = await getActiveTabUrl()
+    let r = ""
+    for (let m in sites) {
+        if (sites[m].gallery) {
+            let reg = new RegExp(sites[m].gallery)
+            if (reg.test(u)) {
+                r = u
+                break
+            }
+        }
+    }
+    return r
+}
 
 export const DownloadButton = ({ added = false, loading = false, children = undefined, ...props}) => {
 
@@ -24,21 +40,23 @@ export const DownloadCurrentUrlButton = () => {
     const [loading, set_loading] = useState(false)
 
     return (
-        <DownloadButton added={added} loading={loading} onClick={ev => {
+        <DownloadButton added={added} loading={loading} onClick={async ev => {
             ev.preventDefault()
-            let current_url = window.location.href
-            set_loading(true)
-            callFunction("add_urls_to_download_queue", {urls: [current_url]}).then(r => {
-                set_loading(false)
-                if (!r.error) {
-                    if (r.data) { 
-                        set_added(true)
+            let current_url = await getGalleryUrl()
+            if (current_url) {
+                set_loading(true)
+                callFunction("add_urls_to_download_queue", {urls: [current_url]}).then(r => {
+                    set_loading(false)
+                    if (!r.error) {
+                        if (r.data) { 
+                            set_added(true)
+                        }
+                    } else {
                     }
-                } else {
-                }
-            })
+                })
+            }
         }}>
-            {added ? "Sent!" : "Download current gallery"}
+            {added ? "Sent!" : "Download this gallery"}
         </DownloadButton>
     );
 };
@@ -51,10 +69,11 @@ const DownloadInput = () => {
     const [loading, set_loading] = useState(false)
 
 
-    useEffect(() => {
+    useEffect(() => {(async () => {
         if (!url) {
-            set_url(window.location.href)
+            set_url(await getActiveTabUrl())
         }
+    })()
     }, [])
 
 
@@ -67,7 +86,6 @@ const DownloadInput = () => {
                 callFunction("add_urls_to_download_queue", {urls: [url]}).then(r => {
                     set_loading(false)
                     if (!r.error) {
-                        console.log(r)
                         if (r.data) { // server returned true
                             set_url("")
                             set_added(true)

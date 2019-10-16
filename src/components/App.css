@@ -6,8 +6,8 @@
 }
 
 .hpx-logo.small {
-    width: 5em;
-    height: 5em;
+    width: 6em;
+    height: 6em;
 }
 
 .text-center {
@@ -16,6 +16,42 @@
 
 .browser-popup {
     width: 355pt;
-    max-height: 350pt;
     transition:all 0.5s ease
+}
+
+.ui.segment.waiting {
+    height: 200pt;
+}
+
+.float-right {
+    float: right;
+}
+
+
+.float-left {
+    float: left;
+}
+
+.muted, .ui.header.muted {
+    color: rgba(0, 0, 0, 0.2);
+}
+
+.ui.placeholder.segment.not-available {
+    min-height: 10em;
+}
+
+.mr-1 {
+    margin-right: 0.2em;
+}
+
+.mr-2 {
+    margin-right: 0.4em;
+}
+
+.ml-1 {
+    margin-left: 0.2em;
+}
+
+.ml-2 {
+    margin-left: 0.4em;
 }

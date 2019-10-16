@@ -1,8 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+if (typeof !global.chrome === "undefined") {
+    global.browser = require("webextension-polyfill")
+}
+
+if (typeof global.browser === "undefined") { // to make it work outside of add-on context
+    global.browser = null
+}
+
+/*eslint-disable */
 import './index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
+/*eslint-enable */
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

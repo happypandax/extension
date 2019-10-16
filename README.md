@@ -13,6 +13,7 @@ With this add-on, you can:
 
 - e-hentai.org
 - exhentai.org
+- panda.chaika.moe
 - nhentai.net
 
 ## Contributing

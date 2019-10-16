@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { HPX_SERVER, DEFAULT_HPX_OPTS } from './constants'
+import { BACKGROUND_STATE } from './constants'
 
 export interface ConnectOpts {
     server?: string
@@ -10,8 +10,9 @@ export interface ConnectOpts {
 }
 
 export const AppContext = React.createContext({
-    server: HPX_SERVER,
-    session: DEFAULT_HPX_OPTS.session,
+    server: BACKGROUND_STATE.server,
+    session: BACKGROUND_STATE.session,
     connected: false,
-    onConnect: (state, opt?: ConnectOpts) => {}
+    onConnect: (state, opt?: ConnectOpts) => {},
+    setError: (error: string) => {}
 })
