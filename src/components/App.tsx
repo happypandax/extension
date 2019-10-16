@@ -2,8 +2,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import hpxsvg from '../misc/happypandax.svg'
 import ConnectForm from './ConnectForm';
 import { AppContext, ConnectOpts } from '../context';
-import { IS_POPUP_CONTEXT, IS_BACKGROUND_CONTEXT, DEBUG, MESSAGES, BACKGROUND_STATE } from '../constants'
-import { callFunction } from '../utility/request';
+import { IS_POPUP_CONTEXT, IS_BACKGROUND_CONTEXT, DEBUG, MESSAGES, BACKGROUND_STATE, HPX_CONTEXTMENU_DOWNLOAD_THIS_GALLERY_ID } from '../constants'
+import { callFunction, downloadUrl } from '../utility/request';
 import DownloadInput, { DownloadCurrentUrlButton, getGalleryUrl } from './DownloadInput';
 import { ErrorMessage } from './Misc';
 import { askSitePermission, askTabsPermission, hasTabsPermission, hasSitePermission, reload, loadContentScript, getStorageValue, setStorageValue, clearStorage, hasWebNavPermission, askWebNavPermission, getActiveTabId, setBadge, getBagde, getActiveTabUrl } from '../browser_utils';
@@ -302,6 +302,30 @@ const updateGalleryStatus = async () => {
   }
 }
 
+const onContextMenu = (info: browser.menus.OnClickData, tab: browser.tabs.Tab) => {
+  if (info.menuItemId === HPX_CONTEXTMENU_DOWNLOAD_THIS_GALLERY_ID) {
+    let url = info.linkUrl || info.pageUrl
+    if (url) {
+      for (let m in sites) {
+        let s = sites[m]
+        if (!s._gallery) {
+          s._gallery = new RegExp(s.gallery)
+        }
+        if (s._gallery.test(url)) {
+          checkGalleryUrlExists(url).then(r => {
+            if (!r) {
+              downloadUrl([url])
+              setBadge({text: "S", color: "green", background:""})
+            } else {
+              setBadge({text: "E", color: "red", background:""})
+            }
+          })
+        }
+      }
+    }
+  }
+}
+
 const onSiteNav = async (site: any, details: any) => {
   let visited_sites = await getStorageValue("visited_sites") as any || []
   if (!visited_sites.includes(site.test)) {
@@ -339,6 +363,17 @@ const App = () => {
   const [header_text, set_header_text] = useState("")
   const [ready, set_ready] = useState(IS_POPUP_CONTEXT ? false : true)
 
+  useEffect(() => {
+    if (!connected && ready) {
+      setBadge({text:"Off", color:"black", background: "red"})
+    } else if (ready) {
+      getBagde({text: true}).then(b => {
+        if (b.text === 'Off') {
+          setBadge({text:"", color:"", background: ""})
+        }
+      })
+    }
+  }, [connected, ready])
   
   useEffect(() => {(async () => {
     try {
@@ -385,15 +420,29 @@ const App = () => {
                   setTimeout(() => {
                     MESSAGES.popup.postMessage({setState: BACKGROUND_STATE})
                   }, 50)
+                }
+              })
+
+              await loadContentScripts()
+
+              browser.runtime.onUpdateAvailable.addListener(() => { reload() })
+              for (let m of Object.keys(sites)) {
+                browser.webNavigation.onDOMContentLoaded.addListener(r => onSiteNav(sites[m], r), {url: [{urlMatches: sites[m].test}]})
               }
-            })
 
-            await loadContentScripts()
+              browser.menus.create({
+                id: HPX_CONTEXTMENU_DOWNLOAD_THIS_GALLERY_ID,
+                title: "Download this gallery",
+                contexts: ["bookmark", "link", "page", "tab"],
+                onclick: onContextMenu,
+                documentUrlPatterns: Object.keys(sites),
+                targetUrlPatterns: Object.keys(sites),
+              }, () => {
+                if (browser.runtime.lastError)
+                  console.error(`failed to create context menu: ${browser.runtime.lastError}`)
+              })
+                
 
-            browser.runtime.onUpdateAvailable.addListener(() => { reload() })
-            for (let m of Object.keys(sites)) {
-              browser.webNavigation.onDOMContentLoaded.addListener(r => onSiteNav(sites[m], r), {url: [{urlMatches: sites[m].test}]})
-            }
           }
 
           let manifest = browser.runtime.getManifest()
@@ -402,6 +451,9 @@ const App = () => {
       }
     } catch (err) {
       set_error(err.message)
+      if (IS_BACKGROUND_CONTEXT) {
+        console.error(err)   
+      }
     }
   })()}, [])
 
@@ -421,6 +473,12 @@ const App = () => {
 
         if (IS_POPUP_CONTEXT) {
           MESSAGES.background.postMessage({setState: {session: BACKGROUND_STATE.session, server: BACKGROUND_STATE.server}})
+        }
+
+        if (BACKGROUND_STATE.connected) {
+          callFunction("set_config", {cfg: {
+            "download.skip_if_downloaded_before": false,
+          }})
         }
 
       }

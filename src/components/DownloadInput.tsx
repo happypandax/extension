@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { callFunction } from '../utility/request';
+import { callFunction, downloadUrl } from '../utility/request';
 import { getActiveTabUrl } from '../browser_utils';
 import sites from '../sites';
 
@@ -45,14 +45,9 @@ export const DownloadCurrentUrlButton = () => {
             let current_url = await getGalleryUrl()
             if (current_url) {
                 set_loading(true)
-                callFunction("add_urls_to_download_queue", {urls: [current_url]}).then(r => {
+                downloadUrl([current_url]).then(r => {
                     set_loading(false)
-                    if (!r.error) {
-                        if (r.data) { 
-                            set_added(true)
-                        }
-                    } else {
-                    }
+                    set_added(r)
                 })
             }
         }}>
@@ -83,17 +78,13 @@ const DownloadInput = () => {
             set_added(false)
             if (url) {
                 set_loading(true)
-                callFunction("add_urls_to_download_queue", {urls: [url]}).then(r => {
+                downloadUrl([url]).then(r => {
                     set_loading(false)
-                    if (!r.error) {
-                        if (r.data) { // server returned true
-                            set_url("")
-                            set_added(true)
-                        }
-                    } else {
-                        set_msg(r.error)
+                    if (r) {
+                        set_url("")
+                        set_added(true)
                     }
-                })
+                }).catch(err => {set_loading(false); set_msg(err.message)})
             }
         }}>
             <div className="field">

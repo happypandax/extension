@@ -57,3 +57,15 @@ export const callFunction = (name: string, args: object, {session = undefined as
         return d
     })
 }
+
+export const downloadUrl = async (urls: string[]) => {
+    let r = await callFunction("add_urls_to_download_queue", {urls})
+    if (!r.error) {
+        if (r.data) { 
+            return true
+        }
+    } else {
+        throw Error(r.error)
+    }
+    return false
+}

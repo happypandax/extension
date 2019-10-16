@@ -19,3 +19,5 @@ export let BACKGROUND_STATE = {
     server: "",
     popup_connected: false // i.e. popup has connected to the background page
 }
+
+export const HPX_CONTEXTMENU_DOWNLOAD_THIS_GALLERY_ID = "happypandax-download-this-gallery"
