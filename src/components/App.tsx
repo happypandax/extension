@@ -514,7 +514,7 @@ const App = () => {
               <img src={hpxsvg} className={`hpx-logo ${connected ? 'small' : ''}`} alt="logo" />
             </div>
             {error && <ErrorMessage>{error}</ErrorMessage>}
-            // CAN'T GET THIS TO WORK!!
+            {/* // CAN'T GET THIS TO WORK!! */}
             {/* {connected && IS_POPUP_CONTEXT && <AskTabsPermission/>}
             {connected && IS_POPUP_CONTEXT && <AskWebNavPermission/>}
             {connected && IS_POPUP_CONTEXT && <AskAllSitesPermission/>}
