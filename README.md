@@ -1,6 +1,6 @@
 #### A WebExtensions add-on for browsers that talks with HappyPanda X from browsers
 
-#### [Install on Firefox]() - Install on Chrome - [HappyPanda X](https://github.com/happypandax/happypandax/) - [Support on Patreon](https://www.patreon.com/twiddly)
+#### [Install on Firefox](https://addons.mozilla.org/en-US/firefox/addon/happypandax/) - Install on Chrome - [HappyPanda X](https://github.com/happypandax/happypandax/) - [Support on Patreon](https://www.patreon.com/twiddly)
 
 > I don't use Chrome so someone else has to fix the possible incompatibilities
 
