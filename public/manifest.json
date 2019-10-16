@@ -28,12 +28,6 @@
     "menus"
   ],
   "commands": {
-    "download-this-gallery": {
-      "suggested_key": {
-        "default": "Ctrl+Alt+D"
-      },
-      "description": "Download this gallery"
-    },
     "_execute_browser_action": {
       "suggested_key": {
         "default": "Ctrl+Alt+S"
