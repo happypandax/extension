@@ -420,6 +420,7 @@ const App = () => {
             }
             
             if (IS_BACKGROUND_CONTEXT) {
+
               // setup message channel to popup page page
               browser.runtime.onConnect.addListener(p => {
                 if (p.name === "popup") {
