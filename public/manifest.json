@@ -6,7 +6,7 @@
   "applications": {
     "gecko": {
       "id": "happypandax@twiddly",
-      "update_url": "https://raw.githubusercontent.com/happypandax/extension/master/dist/updates.json"
+      "update_url": "https://raw.githubusercontent.com/happypandax/extension/master/build/updates.json"
     }
   },
   "icons": {

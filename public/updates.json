@@ -2,6 +2,11 @@
     "addons": {
       "happypandax@twiddly": {
         "updates": [
+          {
+            "version": "1.0.2",
+            "update_info_url": "https://github.com/happypandax/extension/releases/tag/v1.0.2",
+            "update_link":"https://github.com/happypandax/extension/releases/download/v1.0.2/happypanda_x-1.0.2-fx.xpi"
+          }
         ]
       }
     }
