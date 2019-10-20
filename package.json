@@ -54,7 +54,7 @@
       "assets": [
         "dist/*.xpi"
       ],
-      "host": "https://github.com",
+      "host": "github.com",
       "tokenRef": "TWIDDLY_RELEASES"
     }
   }
