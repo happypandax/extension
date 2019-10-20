@@ -369,7 +369,7 @@ const App = () => {
   useEffect(() => {
     if (browser) {
       if (!connected && ready) {
-        setBadge({text:"Off", color:"black", background: "red"})
+        setBadge({text:"Off", color:"red", background: ""})
       } else if (ready) {
         getBagde({text: true}).then(b => {
           if (b.text === 'Off') {

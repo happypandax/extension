@@ -12,7 +12,6 @@
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-scripts": "3.2.0",
-    "release": "^6.1.0",
     "typescript": "^3.6.4",
     "web-ext-types": "^3.2.1",
     "webextension-polyfill": "^0.5.0"
@@ -22,9 +21,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "publish-major": "react-scripts build && release major",
-    "publish-minor": "react-scripts build && release minor",
-    "publish-patch": "react-scripts build && release patch"
+    "publish-major": "react-scripts build && release-it major",
+    "publish-minor": "react-scripts build && release-it minor",
+    "publish-patch": "react-scripts build && release-it patch"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,5 +39,20 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "release-it": "^12.4.3"
+  },
+  "release-it": {
+    "git": {
+      "tagName": "v${version}"
+    },
+    "github": {
+      "releaseName": "HPX Extension v${version}",
+      "release": true,
+      "draft": true,
+      "assets": ["dist/*.xpi"],
+      "tokenRef": "TWIDDLY_RELEASES"
+    }
   }
 }

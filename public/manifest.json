@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "HappyPanda X",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A WebExtensions add-on that talks with HappyPanda X from browsers",
   "applications": {
     "gecko": {
